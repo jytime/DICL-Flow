@@ -1,4 +1,4 @@
-## LEAStereo
+## DICL-Flow
 This repository contains the code for our NeurIPS 2020 paper `Displacement-Invariant Matching Cost Learning for Accurate Optical Flow Estimation` [[NeurIPS]()] [[arxiv]()] 
 
 
