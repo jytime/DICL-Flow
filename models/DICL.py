@@ -19,7 +19,6 @@ def dicl_wrapper(data=None):
     return model
 
 
-
 class DICL_MODULE(nn.Module):
     # Matching net with 2D conv as mentioned in the paper
     def __init__(self):
