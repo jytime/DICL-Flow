@@ -66,7 +66,7 @@ python main.py -b 64 --lr 0.001 --epochs 120 --exp_dir dicl1_chair --cfg ../cfgs
 --pretrained /Path/To/dicl0/checkpoint_best.pth.tar --data /Path/To/FlyingChairs --dataset flying_chairs
 
 # Chair 2 phase, using Displacement Aware Projection layer now.
-# Drop the learning rate by half at epoch 10
+# Drop the learning rate by half at epoch 10.
 python main.py -b 64 --lr 0.001 --epochs 120 --exp_dir dicl2_chair --cfg ../cfgs/dicl2_chair.yml --milestones 10 \
 --pretrained /Path/To/dicl1/checkpoint_best.pth.tar --data /Path/To/FlyingChairs --dataset flying_chairs
 ```
