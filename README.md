@@ -38,13 +38,26 @@ My dataset structure is listed below. You can put data at any place and set the 
 
 ### Pretrained Weights
 
-Pretrained models can be downloaded from [google drive](https://drive.google.com/drive/folders/1y2ISM5veD3K9D0CGJg9qEGeyaQHgLy1y?usp=sharing)
+Pretrained models can be downloaded from [google drive](https://drive.google.com/drive/folders/1y2ISM5veD3K9D0CGJg9qEGeyaQHgLy1y?usp=sharing).
+
+
+### Training
 
 
 ### Evaluation
 
+You can evaluate a trained model like below, where ```-e``` indicates evaluation:
 
-### Training
+```Shell
+python main.py -b 1 -e --pretrained pretrained/ckpt_sintel.pth.tar --cfg cfgs/dicl4_sintel.yml \
+--data /Path/To/Sintel/Dataset --exp_dir /Path/To/Save/Log --dataset mpi_sintel_clean 
+
+python main.py -b 1 -e --pretrained pretrained/ckpt_sintel.pth.tar --cfg cfgs/dicl4_sintel.yml \
+--data /Path/To/Sintel/Dataset --exp_dir /Path/To/Save/Log --dataset mpi_sintel_final
+
+python main.py -b 1 -e --pretrained pretrained/ckpt_kitti.pth.tar --cfg cfgs/dicl5_kitti.yml \
+--data /Path/To/KITTI/Dataset --exp_dir /Path/To/Save/Log --dataset KITTI
+```
 
 
 
