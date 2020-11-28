@@ -1,0 +1,18 @@
+﻿TAG: dicl0_chair
+
+# To avoid noisy training in the initial stage, only simple aug is applied in the intial training phase on the FlyingChairs
+SIMPLE_AUG: True
+
+LOSS_TYPE: 'L2'
+
+CROP_SIZE: [256,384]
+
+# loss weight for each pyramid level
+MultiScale_W: [1.0,0.75,0.50,0.25,0.25]
+
+# search range of cost computation
+SEARCH_RANGE: [3,3,3,3,3]
+
+# valid flow range for each pyramid level, by pixels, e.g., [372,372] indicates from -372 to 372
+VALID_RANGE: [[372,372],[360,360],[336,336],[288,288],[192,192]]
+

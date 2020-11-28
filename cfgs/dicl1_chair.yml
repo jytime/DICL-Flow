@@ -1,0 +1,32 @@
+﻿TAG: dicl1_chair
+
+# Add augmentation compared to dicl0
+# Add context network
+
+CROP_SIZE: [256,384]
+
+
+LOSS_TYPE: 'L2'
+
+
+SEARCH_RANGE: [3,3,3,3,3]
+
+# Use context network
+CTF_CONTEXT: True
+
+# Supervise both the optical flows outputed by soft argmin and context network
+# empirically, this flag does not affect the final performance
+SUP_RAW_FLOW: True
+
+# Using context network, we have two output flows for each pyramid level, with 5 pyramid level in total
+MultiScale_W: [1.0,0.8,0.75,0.6,0.5,0.4,0.5,0.4,0.5,0.4]
+VALID_RANGE: [[372,372],[372,372],[360,360],[360,360],[336,336],[336,336],
+              [288,288],[288,288],[192,192],[192,192]]
+
+
+# Empirically scale the output of context networks to avoid large numbers in the early stage
+SCALE_CONTEXT6: 0.03125
+SCALE_CONTEXT5: 0.0625
+SCALE_CONTEXT4: 0.125
+SCALE_CONTEXT3: 0.25
+SCALE_CONTEXT2: 0.5

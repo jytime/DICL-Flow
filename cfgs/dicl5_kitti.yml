@@ -1,0 +1,26 @@
+﻿TAG: dicl5_kitti
+
+# KITTI dataset
+
+LOSS_TYPE: 'L2'
+MultiScale_W: [1.0,0.8,0.75,0.6,0.5,0.4,0.5,0.4,0.5,0.4]
+VALID_RANGE: [[372,372],[372,372],[360,360],[360,360],[336,336],[336,336],
+              [288,288],[288,288],[192,192],[192,192]]
+SEARCH_RANGE: [3,3,3,3,3]
+CROP_SIZE: [256,1024]
+CTF_CONTEXT: True
+SUP_RAW_FLOW: True
+
+SCALE_CONTEXT6: 0.03125
+SCALE_CONTEXT5: 0.0625
+SCALE_CONTEXT4: 0.125
+SCALE_CONTEXT3: 0.25
+SCALE_CONTEXT2: 0.5
+
+DAP_LAYER: True
+DAP_INIT_BY_ID: True
+
+# Just to be consistent with our pretrained weights. 
+# PAD_BY_CONS can be set to False and PAD_CONS can be set to any values if someone wants to retrain the model
+PAD_BY_CONS: True
+PAD_CONS: 1

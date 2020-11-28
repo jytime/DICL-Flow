@@ -5,9 +5,10 @@ import os
 import sys
 import torch.nn.functional as F
 import numpy as np
-from lib.config import cfg
-from utils.fusion_module import *
+from config import cfg
 import pdb
+# from spatial_correlation_sampler import SpatialCorrelationSampler
+
 
 __all__ = ['dicl_wrapper']
 
@@ -122,11 +123,11 @@ class DICL(nn.Module):
         self.feature = FeatureGA()
 
         if cfg.DAP_LAYER:
-            self.dap_layer6 = DAP(md=cfg.SEATCH_RANGE[4])
-            self.dap_layer5 = DAP(md=cfg.SEATCH_RANGE[3])
-            self.dap_layer4 = DAP(md=cfg.SEATCH_RANGE[2])
-            self.dap_layer3 = DAP(md=cfg.SEATCH_RANGE[1])
-            self.dap_layer2 = DAP(md=cfg.SEATCH_RANGE[0])
+            self.dap_layer6 = DAP(md=cfg.SEARCH_RANGE[4])
+            self.dap_layer5 = DAP(md=cfg.SEARCH_RANGE[3])
+            self.dap_layer4 = DAP(md=cfg.SEARCH_RANGE[2])
+            self.dap_layer3 = DAP(md=cfg.SEARCH_RANGE[1])
+            self.dap_layer2 = DAP(md=cfg.SEARCH_RANGE[0])
         else:
             self.dap_layer6 = self.dap_layer5 = self.dap_layer4 = self.dap_layer3 = self.dap_layer2 = None
 
@@ -142,11 +143,11 @@ class DICL(nn.Module):
 
         # search range, e.g., [-3,3]
         # the search range for FlowRegression should be aligned with that when computing matching cost
-        self.flow6 = FlowRegression(cfg.SEATCH_RANGE[4],cfg.SEATCH_RANGE[4])
-        self.flow5 = FlowRegression(cfg.SEATCH_RANGE[3],cfg.SEATCH_RANGE[3])
-        self.flow4 = FlowRegression(cfg.SEATCH_RANGE[2],cfg.SEATCH_RANGE[2])
-        self.flow3 = FlowRegression(cfg.SEATCH_RANGE[1],cfg.SEATCH_RANGE[1])
-        self.flow2 = FlowRegression(cfg.SEATCH_RANGE[0],cfg.SEATCH_RANGE[0])
+        self.flow6 = FlowRegression(cfg.SEARCH_RANGE[4],cfg.SEARCH_RANGE[4])
+        self.flow5 = FlowRegression(cfg.SEARCH_RANGE[3],cfg.SEARCH_RANGE[3])
+        self.flow4 = FlowRegression(cfg.SEARCH_RANGE[2],cfg.SEARCH_RANGE[2])
+        self.flow3 = FlowRegression(cfg.SEARCH_RANGE[1],cfg.SEARCH_RANGE[1])
+        self.flow2 = FlowRegression(cfg.SEARCH_RANGE[0],cfg.SEARCH_RANGE[0])
 
 
         if cfg.CTF_CONTEXT: 
@@ -253,7 +254,7 @@ class DICL(nn.Module):
         _,y2,y3,y4,y5,y6 = self.feature(y)
 
         # compute flow for level 6
-        cost6 = self.compute_cost(x6,y6,self.matching6,cfg.SEATCH_RANGE[4],cfg.SEATCH_RANGE[4])
+        cost6 = self.compute_cost(x6,y6,self.matching6,cfg.SEARCH_RANGE[4],cfg.SEARCH_RANGE[4])
         g6 = F.interpolate(images[:,:3,:,:],scale_factor=(1/64), mode='bilinear',align_corners=True)
         if self.dap_layer6 is not None: cost6 = self.dap_layer6(cost6)
         flow6 = self.flow6(cost6)
@@ -269,7 +270,7 @@ class DICL(nn.Module):
 
          # compute flow for level 5
         warp5,_ = self.warp(y5,up_flow6)
-        cost5 = self.compute_cost(x5,warp5,self.matching5,cfg.SEATCH_RANGE[3],cfg.SEATCH_RANGE[3])
+        cost5 = self.compute_cost(x5,warp5,self.matching5,cfg.SEARCH_RANGE[3],cfg.SEARCH_RANGE[3])
         g5 = F.interpolate(images[:,:3,:,:],scale_factor=(1/32), mode='bilinear',align_corners=True)
         if self.dap_layer5 is not None: cost5 = self.dap_layer5(cost5)
         flow5 = self.flow5(cost5) + up_flow6
@@ -283,7 +284,7 @@ class DICL(nn.Module):
 
          # compute flow for level 4
         warp4,_ = self.warp(y4,up_flow5)
-        cost4 = self.compute_cost(x4,warp4,self.matching4,cfg.SEATCH_RANGE[2],cfg.SEATCH_RANGE[2])
+        cost4 = self.compute_cost(x4,warp4,self.matching4,cfg.SEARCH_RANGE[2],cfg.SEARCH_RANGE[2])
         g4 = F.interpolate(images[:,:3,:,:],scale_factor=(1/16), mode='bilinear',align_corners=True)
         if self.dap_layer4 is not None: cost4 = self.dap_layer4(cost4)
         flow4 = self.flow4(cost4) + up_flow5
@@ -297,7 +298,7 @@ class DICL(nn.Module):
 
          # compute flow for level 3
         warp3,_ = self.warp(y3,up_flow4)
-        cost3 = self.compute_cost(x3,warp3,self.matching3,cfg.SEATCH_RANGE[1],cfg.SEATCH_RANGE[1])
+        cost3 = self.compute_cost(x3,warp3,self.matching3,cfg.SEARCH_RANGE[1],cfg.SEARCH_RANGE[1])
         g3 = F.interpolate(images[:,:3,:,:],scale_factor=(1/8), mode='bilinear',align_corners=True)
         if self.dap_layer3 is not None: cost3 = self.dap_layer3(cost3)
         flow3 = self.flow3(cost3) + up_flow4
@@ -311,7 +312,7 @@ class DICL(nn.Module):
 
          # compute flow for level 2
         warp2,_ = self.warp(y2,up_flow3)
-        cost2 = self.compute_cost(x2,warp2,self.matching2,cfg.SEATCH_RANGE[0],cfg.SEATCH_RANGE[0])
+        cost2 = self.compute_cost(x2,warp2,self.matching2,cfg.SEARCH_RANGE[0],cfg.SEARCH_RANGE[0])
         g2 = F.interpolate(images[:,:3,:,:],scale_factor=(1/4), mode='bilinear',align_corners=True)
         if self.dap_layer2 is not None: cost2 = self.dap_layer2(cost2)
         flow2 = self.flow2(cost2) + up_flow3
@@ -337,14 +338,20 @@ class DICL(nn.Module):
             # init cost as tensor matrix
             cost = x.new().resize_(x.size()[0], 2*c, 2*maxU+1,2*maxV+1, height,  width).zero_()
 
-        for i in range(2*maxU+1):
-            ind = i-maxU
-            for j in range(2*maxV+1):
-                indd = j-maxV
-                # for each displacement hypothesis, we construct a feature map as the input of matching net
-                # here we hold them together for parallel processing later
-                cost[:,:c,i,j,max(0,-indd):height-indd,max(0,-ind):width-ind] = x[:,:,max(0,-indd):height-indd,max(0,-ind):width-ind]
-                cost[:,c:,i,j,max(0,-indd):height-indd,max(0,-ind):width-ind] = y[:,:,max(0,+indd):height+indd,max(0,ind):width+ind]
+
+        if cfg.CUDA_COST:
+            # CUDA acceleration
+            corr = SpatialCorrelationSampler(kernel_size=1,patch_size=(int(1+2*3),int(1+2*3)),stride=1,padding=0,dilation_patch=1)
+            cost = corr(x, y)
+        else:
+            for i in range(2*maxU+1):
+                ind = i-maxU
+                for j in range(2*maxV+1):
+                    indd = j-maxV
+                    # for each displacement hypothesis, we construct a feature map as the input of matching net
+                    # here we hold them together for parallel processing later
+                    cost[:,:c,i,j,max(0,-indd):height-indd,max(0,-ind):width-ind] = x[:,:,max(0,-indd):height-indd,max(0,-ind):width-ind]
+                    cost[:,c:,i,j,max(0,-indd):height-indd,max(0,-ind):width-ind] = y[:,:,max(0,+indd):height+indd,max(0,ind):width+ind]
 
         if cfg.REMOVE_WARP_HOLE:
             # mitigate the effect of holes (may be raised by occ)
