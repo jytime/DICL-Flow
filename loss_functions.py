@@ -10,8 +10,7 @@ from config import cfg, cfg_from_file, save_config_to_file
 
 def MultiScale_UP(output,target,loss_type='L1',weight=[1.,0.5,0.25],valid_range=None,removezero=False,extra_mask=None):
 
-    # Multiscale Loss, where flow upsampling is automaticly computed here
-
+    # Multi scale Loss, where flow upsampling is automaticly computed here
     loss = 0
     loss_list = []
     b, _, h, w = target.size()
@@ -60,7 +59,6 @@ def MultiScale_UP(output,target,loss_type='L1',weight=[1.,0.5,0.25],valid_range=
         loss+=cur_loss
         loss_list.append(cur_loss)
 
-
     loss = loss/len(output)
     return loss,loss_list,epe
 
@@ -78,7 +76,6 @@ def random_select_points(x,y,x_,y_,samples=10):
 def subspace_loss_batch(flow):
 
     # https://openaccess.thecvf.com/content_CVPR_2019/papers/Zhong_Unsupervised_Deep_Epipolar_Flow_for_Stationary_or_Dynamic_Scenes_CVPR_2019_paper.pdf
-
     B, _, H, W = flow.size()
     xx = Variable(torch.arange(0, W).view(1,-1).repeat(H,1).cuda())
     yy = Variable(torch.arange(0, H).view(-1,1).repeat(1,W).cuda())

@@ -291,6 +291,7 @@ class RandomRotate(object):
         return inputs,target
 
 
+
 class RandomTranslate(object):
     def __init__(self, translation):
         if isinstance(translation, numbers.Number):

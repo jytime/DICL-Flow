@@ -120,7 +120,6 @@ class FlowAugmentor:
 
         return img1, img2, flow
 
-
 class FlowAugmentorKITTI:
     def __init__(self, crop_size, min_scale=-0.2, max_scale=0.5,logger=None):
         self.crop_size = crop_size

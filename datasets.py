@@ -20,7 +20,6 @@ import torchvision.transforms as transforms
 import flow_transforms
 from imageio import imread
 
-
 class CombinedDataset(data.Dataset):
     def __init__(self, datasets):
         self.datasets = datasets
