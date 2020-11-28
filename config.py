@@ -76,7 +76,7 @@ __C.SUP_RAW_FLOW = False # supervise both raw flow (by soft argmin) and refined 
 
 
 
-#####
+###########################################################################
 def cfg_from_file(filename):
     """Load a config file and merge it into the default options."""
     import yaml

@@ -99,8 +99,6 @@ def main():
     if args.cfg is not None:
         cfg_from_file(args.cfg)
         assert cfg.TAG == os.path.splitext(os.path.basename(args.cfg))[0], 'TAG name should be file name'
-    # 'dicl_wrapper' = 'dicl_wrapper'
-
 
     # Build save_path, which can be specified by out_dir and exp_dir
     save_path = '{},{}epochs{},b{},lr{}'.format(
@@ -233,15 +231,13 @@ def main():
             best_EPE = validate(val_loader, model, 0, None, eval_writer,logger=logger)
         return
 
-    # LR schedule
+    # Learning rate schedule
     milestones =[]
     for num in range(len(args.milestones)):
         milestones.append(int(args.milestones[num]))
 
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=milestones, gamma=0.5)
     
-
-
 
     ###################################### Training  ######################################
     for epoch in range(args.start_epoch, args.epochs):

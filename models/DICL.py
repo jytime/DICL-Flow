@@ -471,6 +471,7 @@ class Conv2x(nn.Module):
 class FeatureGA(nn.Module):
     def __init__(self):
         super(FeatureGA, self).__init__()
+        # feature backbone
         # adopted from GANet (https://github.com/feihuzhang/GANet)
         self.conv_start = nn.Sequential(
             BasicConv(3, 32, kernel_size=3, padding=1),
