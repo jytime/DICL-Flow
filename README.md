@@ -1,6 +1,17 @@
 ## DICL-Flow
 This repository contains the code for our NeurIPS 2020 paper [Displacement-Invariant Matching Cost Learning for Accurate Optical Flow Estimation](https://papers.nips.cc/paper/2020/hash/add5aebfcb33a2206b6497d53bc4f309-Abstract.html).
 
+
+```
+@article{wang2020displacement,
+  title={Displacement-Invariant Matching Cost Learning for Accurate Optical Flow Estimation},
+  author={Wang, Jianyuan and Zhong, Yiran and Dai, Yuchao and Zhang, Kaihao and Ji, Pan and Li, Hongdong},
+  journal={Advances in Neural Information Processing Systems},
+  volume={33},
+  year={2020}
+}
+```
+
 ## Requirements
 
 PyTorch 1.1, CUDA 9.0, and other dependencies (e.g., torchvision, tqdm). You can create a virtual environment and use pip to install the requirements. You may also install the dependencies manually.
@@ -43,6 +54,29 @@ Pretrained models can be downloaded from [google drive](https://drive.google.com
 
 ### Training
 
+As discussed in our paper, the training on the FlyingChairs dataset is divided into three phases for a good initialization (only single phase on other three datasets). We assume using eight GPUs while empirically the number of GPUs does not affect the final performance. You can use the commands like below:
+
+```Shell
+# Chair 0 phase, only simple augmentation is applied in the first phase.
+python main.py -b 64 --lr 0.001 --epochs 120 --exp_dir dicl0_chair --cfg cfgs/dicl0_chair.yml \
+--data /Path/To/FlyingChairs --dataset flying_chairs
+
+# Chair 1 phase, using context network now.
+python main.py -b 64 --lr 0.001 --epochs 120 --exp_dir dicl1_chair --cfg ../cfgs/dicl1_chair.yml \
+--pretrained /Path/To/dicl0/checkpoint_best.pth.tar --data /Path/To/FlyingChairs --dataset flying_chairs
+
+# Chair 2 phase, using Displacement Aware Projection layer now.
+# Drop the learning rate by half at epoch 10
+python main.py -b 64 --lr 0.001 --epochs 120 --exp_dir dicl2_chair --cfg ../cfgs/dicl2_chair.yml --milestones 10 \
+--pretrained /Path/To/dicl1/checkpoint_best.pth.tar --data /Path/To/FlyingChairs --dataset flying_chairs
+```
+
+For other datasets, just use one command, e.g.,
+
+```Shell
+python main.py -b 16 --lr 0.00025 --epochs 50 --pretrained /Path/To/dicl2/checkpoint_best.pth.tar
+--exp_dir dicl3_thing --cfg cfgs/dicl3_thing.yml --data /Path/To/FlyingThings --dataset flying_things
+```
 
 ### Evaluation
 
@@ -58,21 +92,6 @@ python main.py -b 1 -e --pretrained pretrained/ckpt_kitti.pth.tar --cfg cfgs/dic
 --data /Path/To/KITTI/Dataset --exp_dir /Path/To/Save/Log --dataset KITTI
 ```
 
-
-
-
-
-### Citation
-
-```
-@article{wang2020displacement,
-  title={Displacement-Invariant Matching Cost Learning for Accurate Optical Flow Estimation},
-  author={Wang, Jianyuan and Zhong, Yiran and Dai, Yuchao and Zhang, Kaihao and Ji, Pan and Li, Hongdong},
-  journal={Advances in Neural Information Processing Systems},
-  volume={33},
-  year={2020}
-}
-```
 
 ### Acknowledgment
 
