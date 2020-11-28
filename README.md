@@ -3,11 +3,7 @@ This repository contains the code for our NeurIPS 2020 paper `Displacement-Invar
 
 ## Requirements
 
-PyTorch 1.1, CUDA 9.0, and other dependencies (e.g., torchvision, tqdm).
-
-#### Install
-
-You can create a virtual environment and use pip to install the requirements. You may also install the dependencies manually.
+PyTorch 1.1, CUDA 9.0, and other dependencies (e.g., torchvision, tqdm). You can create a virtual environment and use pip to install the requirements. You may also install the dependencies manually.
 
 ```shell
 conda create -n dicl python=3.6
