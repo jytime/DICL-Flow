@@ -49,15 +49,16 @@ Pretrained models can be downloaded from [google drive](https://drive.google.com
 You can evaluate a trained model like below, where ```-e``` indicates evaluation:
 
 ```Shell
+# Sintel Dataset
 python main.py -b 1 -e --pretrained pretrained/ckpt_sintel.pth.tar --cfg cfgs/dicl4_sintel.yml \
 --data /Path/To/Sintel/Dataset --exp_dir /Path/To/Save/Log --dataset mpi_sintel_clean 
 
-python main.py -b 1 -e --pretrained pretrained/ckpt_sintel.pth.tar --cfg cfgs/dicl4_sintel.yml \
---data /Path/To/Sintel/Dataset --exp_dir /Path/To/Save/Log --dataset mpi_sintel_final
-
+# KITTI Dataset
 python main.py -b 1 -e --pretrained pretrained/ckpt_kitti.pth.tar --cfg cfgs/dicl5_kitti.yml \
 --data /Path/To/KITTI/Dataset --exp_dir /Path/To/Save/Log --dataset KITTI
 ```
+
+
 
 
 
