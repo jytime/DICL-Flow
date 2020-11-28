@@ -95,5 +95,5 @@ python main.py -b 1 -e --pretrained pretrained/ckpt_kitti.pth.tar --cfg cfgs/dic
 
 ### Acknowledgment
 
-Our codes were developed on the basis of [FlowNetPytorch](https://github.com/ClementPinard/FlowNetPytorch) and [VCN](https://github.com/gengshan-y/VCN). After the paper acceptation, we update the part of Dataloader, learning from [RAFT](https://github.com/princeton-vl/RAFT). Thanks a lot for their excellent works.
+Our codes were developed on the basis of [FlowNetPytorch](https://github.com/ClementPinard/FlowNetPytorch) and [VCN](https://github.com/gengshan-y/VCN). After the paper acceptation, we updated the part of Dataloader, learning from [RAFT](https://github.com/princeton-vl/RAFT). Thanks a lot for their excellent works.
 
