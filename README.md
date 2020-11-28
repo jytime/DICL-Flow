@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 We conduct experiments on the [FlyingChairs](https://lmb.informatik.uni-freiburg.de/resources/datasets/FlyingChairs.en.html#flyingchairs), [FlyingThings3D](https://lmb.informatik.uni-freiburg.de/resources/datasets/SceneFlowDatasets.en.html), [MPI Sintel](http://sintel.is.tue.mpg.de/), and [KITTI](http://www.cvlibs.net/datasets/kitti/eval_scene_flow.php?benchmark=flow) optical flow datasets.
 
-My dataset structure is listed below. You can put data at any place and set the --data flag of main.py correspondingly.
+My dataset structure is listed below. You can put data at any place and set the ```--data``` flag of main.py correspondingly.
 
 ```Shell
 ├── dataset
