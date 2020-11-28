@@ -1,5 +1,5 @@
 ## DICL-Flow
-This repository contains the code for our NeurIPS 2020 paper `Displacement-Invariant Matching Cost Learning for Accurate Optical Flow Estimation` [[NeurIPS](https://papers.nips.cc/paper/2020/hash/add5aebfcb33a2206b6497d53bc4f309-Abstract.html)].
+This repository contains the code for our NeurIPS 2020 paper [Displacement-Invariant Matching Cost Learning for Accurate Optical Flow Estimation](https://papers.nips.cc/paper/2020/hash/add5aebfcb33a2206b6497d53bc4f309-Abstract.html).
 
 ## Requirements
 
@@ -38,11 +38,13 @@ My dataset structure is listed below. You can put data at any place and set the 
 
 ### Pretrained Weights
 
-
-### Training
+Pretrained models can be downloaded from [google drive](https://drive.google.com/drive/folders/1y2ISM5veD3K9D0CGJg9qEGeyaQHgLy1y?usp=sharing)
 
 
 ### Evaluation
+
+
+### Training
 
 
 
