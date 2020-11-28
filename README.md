@@ -37,14 +37,14 @@ My dataset structure is listed below. You can put data at any place and set the 
         ├── train
         ├── val
     ├── Sintel
+        ├── training
         ├── test
-        ├── training
     ├── KITTI2012
-        ├── testing
         ├── training
+        ├── testing
     ├── KITTI2015
-        ├── testing
         ├── training
+        ├── testing
 ```
 
 ### Pretrained Weights
