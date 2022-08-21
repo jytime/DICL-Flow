@@ -58,6 +58,7 @@ As discussed in our paper, the training on the FlyingChairs dataset is divided i
 
 ```Shell
 # Chair 0 phase, only simple augmentation is applied in the first phase.
+# Please note each epoch contains around 350 iteration on FlyingChairs, 22232/64
 python main.py -b 64 --lr 0.001 --epochs 120 --exp_dir dicl0_chair --cfg cfgs/dicl0_chair.yml \
 --data /Path/To/FlyingChairs --dataset flying_chairs
 
